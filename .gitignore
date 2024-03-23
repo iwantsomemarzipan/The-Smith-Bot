@@ -5,4 +5,3 @@ Scripts/
 share/
 .env
 pyvenv.cfg
-config_reader.py
