@@ -33,6 +33,6 @@ def get_similar_response(user_input):
         response = np.random.choice(response_cluster)
 
     elif user_vector is None:
-        return "Sorry, I couldn't resolve your input :("
+        return "Apologies, I couldn't decipher your input this time :("
 
     return response
