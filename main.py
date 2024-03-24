@@ -11,9 +11,9 @@ from tg.handlers.user_assistance_handler import assistance_router
 
 logging.basicConfig(level=logging.INFO)
 
-# session: AiohttpSession = AiohttpSession(proxy='http://proxy.server:3128')
+session: AiohttpSession = AiohttpSession(proxy='http://proxy.server:3128')
 storage: MemoryStorage = MemoryStorage()
-bot: Bot = Bot(token=config.bot_token.get_secret_value(), )      # session=session
+bot: Bot = Bot(token=config.bot_token.get_secret_value(), session=session)
 dp: Dispatcher = Dispatcher()
 
 dp.include_router(start_router)
