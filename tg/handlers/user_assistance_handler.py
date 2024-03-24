@@ -14,13 +14,13 @@ keyboard: InlineKeyboardMarkup = InlineKeyboardMarkup(
     inline_keyboard=[[url_button]])
 
 
-# Команда для получения ссылки репозитория
+# Command for getting the link to the repo
 @assistance_router.message(Command(commands='info'))
 async def process_info_command(message: Message):
     await message.answer(LEXICON['/info'], reply_markup=keyboard)
 
 
-# Помощь
+# Help command
 @assistance_router.message(Command(commands='help'))
 async def process_help_command(message: Message):
     await message.answer(LEXICON['/help'])

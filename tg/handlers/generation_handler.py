@@ -12,30 +12,30 @@ from sklearn_training.response_generation import get_similar_response
 generation_router: Router = Router()
 
 
-# Машина состояния
+# State machine
 class FSMUsermessage(StatesGroup):
     user_message = State()
 
-# Активируем машину состояния при вводе команды /generate_response
+# Activating FSM when entering /generate_response
 @generation_router.message(Command(commands='generate_response'), StateFilter(default_state))
 async def process_generation_command(message: Message, state: FSMContext):
     await message.answer(LEXICON['/generate_response'])
     await state.set_state(FSMUsermessage.user_message)
 
-# Подбираем ответ от бота пользователю
+# Selecting a response from the bot to the user
 @generation_router.message(StateFilter(FSMUsermessage.user_message))
 async def process_user_message_sent(message: Message, state: FSMContext):
     user_input = message.text.lower()
     response = get_similar_response(user_input)
 
-    # Кнопка под ответом для остановки генерации
+    # Button under the bot's response message to stop generation
     stop_generating_button = InlineKeyboardButton(text='Stop Generating', callback_data='stop_generating')
     keyboard = InlineKeyboardMarkup(inline_keyboard=[[stop_generating_button]])
 
     await message.answer(response, reply_markup=keyboard)
     await state.update_data(user_message=user_input)
 
-# Для вывода из машины состояния
+# Finishing FSM
 @generation_router.callback_query(lambda c: c.data == 'stop_generating')
 async def stop_generating_callback(callback_query: CallbackQuery, state: FSMContext):
     await callback_query.answer()

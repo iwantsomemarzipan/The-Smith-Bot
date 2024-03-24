@@ -7,8 +7,8 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 kmeans = joblib.load('the_smiths_kmeans_model.pkl')
 
-# Функции для получения векторов для каждого слова из инпута пользователя 
-# и подсчёта их среднего для получения вектора предложения
+# Obtaining vectors for each word from user's input and calculating
+# their average to get sentence vectors
 def get_sentence_vector(user_input):
     words = re.sub(r'[^a-zA-Z\s]', '', user_input)
     words = words.lower()
@@ -19,17 +19,18 @@ def get_sentence_vector(user_input):
 def get_similar_response(user_input):
     user_vector = get_sentence_vector(user_input)
     if user_vector is not None:
-        # Вычисляем сходство с каждым центроидом кластера
+        # Calculating the similarity with each cluster centroid
+        # with cosine similarity
         similarities = []
         for centroid in kmeans.cluster_centers_:
             similarity = cosine_similarity([user_vector], [centroid])[0][0]
             similarities.append(similarity)
 
-        # Находим кластер с наибольшим сходством
+        # Detecting the cluster with the greatest similarity
         max_similarity_index = np.argmax(similarities)
         response_cluster = line_clusters[max_similarity_index]
 
-        # Выбираем случайную строку из выбранного кластера
+        # Choosing a random line from the target cluster
         response = np.random.choice(response_cluster)
 
     elif user_vector is None:

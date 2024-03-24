@@ -6,7 +6,7 @@ from tg.lexicon.lexicon import LEXICON
 start_router: Router = Router()
 
 
-# Стартовая команда
+# Start command
 @start_router.message(CommandStart())
 async def process_start_command(message: Message):
     await message.answer(LEXICON['/start'])

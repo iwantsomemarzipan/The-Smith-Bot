@@ -5,7 +5,7 @@ from sklearn.cluster import KMeans
 
 os.chdir('./sklearn_training')
 
-# Загружаем преобразованный (за кадром) bin файл модели
+# Loading .pkl converted w2v model file
 my_model = joblib.load('the_smiths_word2vec_model.pkl')
 
 os.chdir('..')
@@ -18,21 +18,21 @@ with open(txt_file, 'r', encoding='utf-8') as file:
     for line in lines:
         line = line.lower()
 
-# Функция для получения векторов для каждого слова 
-# и подсчёта их среднего для получения вектора предложения
+# Obtaining vectors for each word and calculating
+# their average to get sentence vectors
 def get_sentence_vector(line):
     words = line.split()
     vectors = [my_model[word] for word in words if word in my_model]
     return np.mean(vectors, axis=0) if vectors else None
 
-# Сохраняем и фильтруем векторы
+# Saving and filtering vectors
 sentence_vectors = [get_sentence_vector(line) for line in lines]
 valid_sentence_vectors = [vec for vec in sentence_vectors if vec is not None]
 
 os.chdir('..')
 os.chdir('./sklearn_training')
 
-# Тренируем модель кластеризации
+# Training clustering model
 kmeans = KMeans(n_clusters=10, random_state=42)
 kmeans.fit(valid_sentence_vectors)
 cluster_labels_c = kmeans.labels_
@@ -41,8 +41,9 @@ joblib.dump(kmeans, 'the_smiths_kmeans_model.pkl')
 
 line_clusters = {}
 
-# Присваиваем каждую строку песен тому или иному кластеру на основе
-# предсказаний модели кластеризации, сохраняем кластеры и их строки в словарь
+# Assigning each line of songs to a cluster based on the predictions
+# of the clustering model, save the clusters and
+# their corresponding lines in a dictionary
 for i, line in enumerate(lines):
     if i < len(cluster_labels_c) and sentence_vectors[i] is not None:
         cluster_id = cluster_labels_c[i]
