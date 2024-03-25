@@ -27,12 +27,10 @@ to run the bot *remotely* you must clone the repository to pythonanywhere
 
 to run the bot *locally* you must edit the main.py as shown below:
 ```
-...
-~~from aiogram.client.session.aiohttp import AiohttpSession~~
-...
-~~session: AiohttpSession = AiohttpSession(proxy='http://proxy.server:3128')~~
+logging.basicConfig(level=logging.INFO)
+
 storage: MemoryStorage = MemoryStorage()
-bot: Bot = Bot(token=config.bot_token.get_secret_value(), ~~session=session~~)
+bot: Bot = Bot(token=config.bot_token.get_secret_value())
 dp: Dispatcher = Dispatcher()
 ```
 
