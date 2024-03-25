@@ -35,7 +35,7 @@ os.chdir('./sklearn_training')
 # Training clustering model
 kmeans = KMeans(n_clusters=10, random_state=42)
 kmeans.fit(valid_sentence_vectors)
-cluster_labels_c = kmeans.labels_
+cluster_labels = kmeans.labels_
 
 joblib.dump(kmeans, 'the_smiths_kmeans_model.pkl')
 
@@ -45,8 +45,8 @@ line_clusters = {}
 # of the clustering model, save the clusters and
 # their corresponding lines in a dictionary
 for i, line in enumerate(lines):
-    if i < len(cluster_labels_c) and sentence_vectors[i] is not None:
-        cluster_id = cluster_labels_c[i]
+    if i < len(cluster_labels) and sentence_vectors[i] is not None:
+        cluster_id = cluster_labels[i]
         if cluster_id not in line_clusters:
             line_clusters[cluster_id] = []
         line_clusters[cluster_id].append(line)
