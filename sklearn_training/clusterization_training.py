@@ -37,15 +37,16 @@ os.chdir('./sklearn_training')
 # Using elbow method to find optimal number of clusters
 distortions = []
 cluster_range = range(1, 201)
+
 for k in cluster_range:
     model = KMeans(n_clusters=k)
     model.fit(valid_sentence_vectors)
     distortions.append(model.inertia_)
 
 sns.lineplot(x=cluster_range, y=distortions)
-plt.title("Сумма квадратов расстояний до центра кластера")
-plt.xlabel("Кол-во кластеров")
-plt.ylabel("Сумма квадратов расстояний")
+plt.title('Sum of squared distances to the cluster center')
+plt.xlabel('Number of clusters')
+plt.ylabel('Sum of squared distances')
 plt.savefig('elbow.png')
 
 # Training clustering model
