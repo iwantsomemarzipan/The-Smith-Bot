@@ -20,8 +20,8 @@ with open(txt_file, 'r', encoding='utf-8') as file:
     for line in lines:
         line = line.lower()
 
-# Searching for words and their embeddings in user's input that are
-# familiar to word2vec model and calculating vectors' average  
+# Obtaining vectors for each line in lyrics and
+# calculating their average
 def get_sentence_vector(line):
     words = line.split()
     vectors = [my_model[word] for word in words if word in my_model]

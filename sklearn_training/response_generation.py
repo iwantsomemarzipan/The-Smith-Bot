@@ -7,8 +7,8 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 kmeans = joblib.load('the_smiths_kmeans_model.pkl')
 
-# Obtaining vectors for each word from user's input and calculating
-# their average to get sentence vectors
+# Searching for words and their embeddings in user's input that are
+# familiar to word2vec model and calculating vectors' average
 def get_sentence_vector(user_input):
     words = re.sub(r'[^a-zA-Z\s]', '', user_input)
     words = words.lower()
