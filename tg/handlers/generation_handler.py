@@ -16,12 +16,14 @@ generation_router: Router = Router()
 class FSMUsermessage(StatesGroup):
     user_message = State()
 
+
 # Activating FSM when entering /generate_response
 @generation_router.message(Command(commands='generate_response'),
                            StateFilter(default_state))
 async def process_generation_command(message: Message, state: FSMContext):
     await message.answer(LEXICON['/generate_response'])
     await state.set_state(FSMUsermessage.user_message)
+
 
 # Selecting a response from the bot to the user
 @generation_router.message(StateFilter(FSMUsermessage.user_message))
@@ -37,6 +39,7 @@ async def process_user_message_sent(message: Message, state: FSMContext):
 
     await message.answer(response, reply_markup=keyboard)
     await state.update_data(user_message=user_input)
+
 
 # Finishing FSM
 @generation_router.callback_query(lambda c: c.data == 'stop_generating')
