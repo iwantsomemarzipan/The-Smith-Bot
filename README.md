@@ -12,21 +12,21 @@ Bot hosting on pythonanywhere: https://cfauh.pythonanywhere.com/
 ## Installation
 
 clone the repository
-'''
+```
 git clone https://gitlab.com/iwantsomemarzipan/bunny_bot_hse.git
-'''
+```
 
 download requiered libraries
-'''
+```
 pip install -r requirements.txt
-'''
+```
 
 to run the bot you have to get your own API token from @BotFather in telegram, then create The-Smiths-Bot/.env and paste the token here (see .env.example)
 
 to run the bot *remotely* you must clone the repository to pythonanywhere
 
 to run the bot *locally* you must edit the main.py as shown below:
-'''
+```
 ...
 ~~from aiogram.client.session.aiohttp import AiohttpSession~~
 ...
@@ -34,7 +34,7 @@ to run the bot *locally* you must edit the main.py as shown below:
 storage: MemoryStorage = MemoryStorage()
 bot: Bot = Bot(token=config.bot_token.get_secret_value(), ~~session=session~~)
 dp: Dispatcher = Dispatcher()
-'''
+```
 
 ## Repository structure
 
