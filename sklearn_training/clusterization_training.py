@@ -1,6 +1,8 @@
 import os
 import numpy as np
 import joblib
+import matplotlib.pyplot as plt
+import seaborn as sns
 from sklearn.cluster import KMeans
 
 os.chdir('./sklearn_training')
@@ -32,8 +34,23 @@ valid_sentence_vectors = [vec for vec in sentence_vectors if vec is not None]
 os.chdir('..')
 os.chdir('./sklearn_training')
 
+# Using elbow method to find optimal number of clusters
+distortions = []
+cluster_range = range(1, 21)
+for k in cluster_range:
+    model = KMeans(n_clusters=k)
+    model.fit(valid_sentence_vectors)
+    distortions.append(model.inertia_)
+
+sns.lineplot(x=cluster_range, y=distortions)
+plt.title("Сумма квадратов расстояний до центра кластера")
+plt.xlabel("Кол-во кластеров")
+plt.ylabel("Сумма квадратов расстояний")
+plt.savefig('elbow.png')
+
 # Training clustering model
-kmeans = KMeans(n_clusters=10, random_state=42)
+# considering that the best number of clusters is 7
+kmeans = KMeans(n_clusters=7, random_state=42)
 kmeans.fit(valid_sentence_vectors)
 cluster_labels = kmeans.labels_
 
