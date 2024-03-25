@@ -36,7 +36,7 @@ os.chdir('./sklearn_training')
 
 # Using elbow method to find optimal number of clusters
 distortions = []
-cluster_range = range(1, 21)
+cluster_range = range(1, 201)
 for k in cluster_range:
     model = KMeans(n_clusters=k)
     model.fit(valid_sentence_vectors)
@@ -49,8 +49,8 @@ plt.ylabel("Сумма квадратов расстояний")
 plt.savefig('elbow.png')
 
 # Training clustering model
-# considering that the best number of clusters is 7
-kmeans = KMeans(n_clusters=7, random_state=42)
+# considering that the best number of clusters is 30
+kmeans = KMeans(n_clusters=30, random_state=42)
 kmeans.fit(valid_sentence_vectors)
 cluster_labels = kmeans.labels_
 
