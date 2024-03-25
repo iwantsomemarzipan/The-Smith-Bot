@@ -9,6 +9,33 @@ Bot id in telegram: @iluvthesmiths500_bot
 
 Bot hosting on pythonanywhere: https://cfauh.pythonanywhere.com/
 
+## Installation
+
+clone the repository
+'''
+git clone https://gitlab.com/iwantsomemarzipan/bunny_bot_hse.git
+'''
+
+download requiered libraries
+'''
+pip install -r requirements.txt
+'''
+
+to run the bot you have to get your own API token from @BotFather in telegram, then create The-Smiths-Bot/.env and paste the token here (see .env.example)
+
+to run the bot *remotely* you must clone the repository to pythonanywhere
+
+to run the bot *locally* you must edit the main.py as shown below:
+'''
+...
+~~from aiogram.client.session.aiohttp import AiohttpSession~~
+...
+~~session: AiohttpSession = AiohttpSession(proxy='http://proxy.server:3128')~~
+storage: MemoryStorage = MemoryStorage()
+bot: Bot = Bot(token=config.bot_token.get_secret_value(), ~~session=session~~)
+dp: Dispatcher = Dispatcher()
+'''
+
 ## Repository structure
 
 **root directory**
@@ -64,3 +91,4 @@ stores:
     1. handlers for basic commands like /start, /help and /info
     2. handlers for response generation. When a user presses the relevant command, it activates a finite-state machine. It is needed to keep generation as long as the user wants and eliminate the inconvenience of entering the command each time one tries to get a new response.
 6. The last part is making a main.py which runs the bot. It also connects to a pythonanywhere deployment site using proxy. 
+
