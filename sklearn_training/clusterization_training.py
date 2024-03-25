@@ -20,8 +20,8 @@ with open(txt_file, 'r', encoding='utf-8') as file:
     for line in lines:
         line = line.lower()
 
-# Obtaining vectors for each word and calculating
-# their average to get sentence vectors
+# Searching for words and their embeddings in user's input that are
+# familiar to word2vec model and calculating vectors' average  
 def get_sentence_vector(line):
     words = line.split()
     vectors = [my_model[word] for word in words if word in my_model]
